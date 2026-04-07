@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>API Connection Test - RunARide</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 50px auto;
+      padding: 20px;
+      background: #f5f5f5;
+    }
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    h1 {
+      color: #333;
+      border-bottom: 3px solid #ffb703;
+      padding-bottom: 10px;
+    }
+    .test-section {
+      margin: 20px 0;
+      padding: 15px;
+      background: #f9f9f9;
+      border-left: 4px solid #ffb703;
+    }
+    button {
+      background: #ffb703;
+      color: #1a1a1a;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      margin: 5px;
+    }
+    button:hover {
+      background: #fb8500;
+    }
+    .result {
+      margin-top: 10px;
+      padding: 10px;
+      border-radius: 5px;
+      font-family: monospace;
+      white-space: pre-wrap;
+    }
+    .success {
+      background: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+    .error {
+      background: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+    .info {
+      background: #d1ecf1;
+      color: #0c5460;
+      border: 1px solid #bee5eb;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🔧 RunARide API Connection Test</h1>
+    <p>Use this page to diagnose connection issues with your backend API.</p>
+
+    <!-- Test 1: Server Health -->
+    <div class="test-section">
+      <h3>Test 1: Check if Server is Running</h3>
+      <button onclick="testServerHealth()">Test Server Connection</button>
+      <div id="health-result"></div>
+    </div>
+
+    <!-- Test 2: Database Connection -->
+    <div class="test-section">
+      <h3>Test 2: Check Database Connection</h3>
+      <button onclick="testDatabase()">Test Database</button>
+      <div id="db-result"></div>
+    </div>
+
+    <!-- Test 3: User Registration -->
+    <div class="test-section">
+      <h3>Test 3: Test User Registration</h3>
+      <button onclick="testRegistration()">Test Registration API</button>
+      <div id="register-result"></div>
+    </div>
+
+    <!-- Test 4: User Login -->
+    <div class="test-section">
+      <h3>Test 4: Test User Login</h3>
+      <button onclick="testLogin()">Test Login API</button>
+      <div id="login-result"></div>
+    </div>
+
+    <!-- Solutions -->
+    <div class="test-section">
+      <h3>🛠️ Solutions Based on Results</h3>
+      <div id="solutions" class="info">
+        Run the tests above to see solutions here.
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const API_BASE = window.location.origin;
+
+    // Test 1: Server Health
+    async function testServerHealth() {
+      const resultDiv = document.getElementById('health-result');
+      resultDiv.innerHTML = '<p>Testing...</p>';
+
+      try {
+        const response = await fetch(`${API_BASE}/api/health`);
+        const data = await response.json();
+
+        if (response.ok) {
+          resultDiv.innerHTML = `
+            <div class="success">
+              ✅ Server is running!
+              <br>
+              Status: ${data.status}
+              <br>
+              Message: ${data.message}
+              <br>
+              Server URL: ${API_BASE}
+            </div>
+          `;
+          document.getElementById('solutions').innerHTML = `
+            <strong>✅ Server is working!</strong><br>
+            If signup/signin still doesn't work, check:<br>
+            1. Browser console (F12) for JavaScript errors<br>
+            2. Form validation - all fields must be filled<br>
+            3. Try Test 3 and Test 4 below
+          `;
+        } else {
+          resultDiv.innerHTML = `<div class="error">❌ Server returned: ${data.message}</div>`;
+        }
+      } catch (error) {
+        resultDiv.innerHTML = `
+          <div class="error">
+            ❌ Cannot connect to server!
+            <br>
+            Error: ${error.message}
+            <br><br>
+            <strong>Server URL tested:</strong> ${API_BASE}/api/health
+          </div>
+        `;
+        document.getElementById('solutions').innerHTML = `
+          <strong>❌ Server is NOT running!</strong><br><br>
+          <strong>Fix:</strong><br>
+          1. Open Command Prompt in runaride folder<br>
+          2. Run: <code>npm run dev</code><br>
+          3. Wait for "Server running on port 5000" message<br>
+          4. Refresh this page and test again<br><br>
+          <strong>If MongoDB error:</strong><br>
+          - Run: <code>net start MongoDB</code><br><br>
+          <strong>If port error:</strong><br>
+          - Run: <code>netstat -ano | findstr :5000</code><br>
+          - Then: <code>taskkill /PID [number] /F</code>
+        `;
+      }
+    }
+
+    // Test 2: Database
+    async function testDatabase() {
+      const resultDiv = document.getElementById('db-result');
+      resultDiv.innerHTML = '<p>Testing database connection...</p>';
+
+      try {
+        const response = await fetch(`${API_BASE}/api/health`);
+        const data = await response.json();
+
+        if (data.status === 'OK') {
+          resultDiv.innerHTML = `
+            <div class="success">
+              ✅ Database is connected!
+              <br>
+              The server is running and MongoDB is connected.
+            </div>
+          `;
+        } else {
+          resultDiv.innerHTML = `<div class="error">❌ Database might not be connected</div>`;
+        }
+      } catch (error) {
+        resultDiv.innerHTML = `
+          <div class="error">
+            ❌ Cannot verify database connection
+            <br>
+            Error: ${error.message}
+          </div>
+        `;
+        document.getElementById('solutions').innerHTML += `
+          <br><br><strong>Database Error Fix:</strong><br>
+          1. Make sure MongoDB is installed<br>
+          2. Run: <code>net start MongoDB</code><br>
+          3. Check .env file has correct MONGODB_URI<br>
+          4. Restart server: <code>npm run dev</code>
+        `;
+      }
+    }
+
+    // Test 3: Registration
+    async function testRegistration() {
+      const resultDiv = document.getElementById('register-result');
+      resultDiv.innerHTML = '<p>Testing registration API...</p>';
+
+      const testUser = {
+        fullName: 'Test User',
+        email: `test${Date.now()}@example.com`,
+        phone: '9876543210',
+        password: 'test123'
+      };
+
+      try {
+        const response = await fetch(`${API_BASE}/api/users/register`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(testUser)
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          resultDiv.innerHTML = `
+            <div class="success">
+              ✅ Registration API is working!
+              <br>
+              User created: ${data.fullName}
+              <br>
+              Email: ${data.email}
+              <br>
+              Token received: ${data.token ? 'Yes' : 'No'}
+              <br><br>
+              <strong>The API endpoint is working correctly!</strong>
+            </div>
+          `;
+          document.getElementById('solutions').innerHTML = `
+            <strong>✅ All APIs are working!</strong><br><br>
+            If signup form still shows error:<br>
+            1. Clear browser cache (Ctrl + Shift + Delete)<br>
+            2. Check form fields - all must be filled correctly<br>
+            3. Password must be at least 6 characters<br>
+            4. Phone must be 10 digits<br>
+            5. Check browser console (F12) for specific errors
+          `;
+        } else {
+          resultDiv.innerHTML = `
+            <div class="error">
+              ❌ Registration failed
+              <br>
+              Error: ${data.message}
+              <br>
+              Status: ${response.status}
+            </div>
+          `;
+        }
+      } catch (error) {
+        resultDiv.innerHTML = `
+          <div class="error">
+            ❌ Cannot reach registration API!
+            <br>
+            Error: ${error.message}
+          </div>
+        `;
+      }
+    }
+
+    // Test 4: Login
+    async function testLogin() {
+      const resultDiv = document.getElementById('login-result');
+      resultDiv.innerHTML = '<p>Testing login API...</p>';
+
+      // First create a user, then try to login
+      const testEmail = `test${Date.now()}@example.com`;
+      
+      try {
+        // Create user first
+        await fetch(`${API_BASE}/api/users/register`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            fullName: 'Test User',
+            email: testEmail,
+            phone: '9876543210',
+            password: 'test123'
+          })
+        });
+
+        // Try to login
+        const response = await fetch(`${API_BASE}/api/users/login`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            email: testEmail,
+            password: 'test123'
+          })
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          resultDiv.innerHTML = `
+            <div class="success">
+              ✅ Login API is working!
+              <br>
+              User: ${data.fullName}
+              <br>
+              Token received: ${data.token ? 'Yes' : 'No'}
+              <br><br>
+              <strong>Login functionality is working correctly!</strong>
+            </div>
+          `;
+        } else {
+          resultDiv.innerHTML = `
+            <div class="error">
+              ❌ Login failed
+              <br>
+              Error: ${data.message}
+            </div>
+          `;
+        }
+      } catch (error) {
+        resultDiv.innerHTML = `
+          <div class="error">
+            ❌ Cannot reach login API!
+            <br>
+            Error: ${error.message}
+          </div>
+        `;
+      }
+    }
+
+    // Auto-run health test on page load
+    window.addEventListener('load', () => {
+      testServerHealth();
+    });
+  </script>
+</body>
+</html>

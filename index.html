@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Run A Ride - Book Autos Instantly</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="logo">Run<span>A</span>Ride</div>
+    <nav>
+      <a href="#home">Home</a>
+      <a href="#book">Book Ride</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#features">Features</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="nav-btns">
+      <a href="dashboard.html" class="btn-outline"><i class="fas fa-user-circle"></i> Dashboard</a>
+      <a href="quick-login.html" class="btn-primary"><i class="fas fa-bolt"></i> Quick Login</a>
+      <a href="signin.html" class="btn-outline">Login</a>
+      <a href="signup.html" class="btn-outline">Sign Up</a>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero" id="home">
+    <div class="hero-content">
+      <h1>Book Autos Instantly with <span>Run A Ride</span></h1>
+      <p>Smart, fast & safe auto booking platform for your daily rides.</p>
+
+      <div class="hero-stats">
+        <div class="stat">
+          <h3>10K+</h3>
+          <p>Happy Riders</p>
+        </div>
+        <div class="stat">
+          <h3>500+</h3>
+          <p>Verified Drivers</p>
+        </div>
+        <div class="stat">
+          <h3>24/7</h3>
+          <p>Support</p>
+        </div>
+      </div>
+
+      <div class="hero-buttons">
+        <a href="book-ride.html" class="btn-primary">Book Now</a>
+        <a href="signin.html" class="btn-outline"><i class="fas fa-sign-in-alt"></i> Login</a>
+      </div>
+    </div>
+
+    <div class="hero-card" id="book">
+      <h2>Book Your Ride 🚖</h2>
+      <p>Enter pickup and drop locations to get fare instantly.</p>
+
+      <form>
+        <label>Pickup Location</label>
+        <input type="text" placeholder="Enter pickup location">
+
+        <label>Drop Location</label>
+        <input type="text" placeholder="Enter drop location">
+
+        <label for="ride-type">Select Ride Type</label>
+        <select id="ride-type">
+          <option>Standard Auto</option>
+          <option>Shared Auto</option>
+          <option>Premium Auto</option>
+        </select>
+
+        <button type="submit" class="btn-primary full-btn">Estimate Fare</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="features" id="features">
+    <h2>Why Choose Run A Ride?</h2>
+    <p>Trusted rides with safety and affordability.</p>
+
+    <div class="feature-grid">
+      <div class="feature-card">
+        <i class="fa-solid fa-user-shield"></i>
+        <h3>Verified Drivers</h3>
+        <p>All drivers are verified for safe and secure rides.</p>
+      </div>
+
+      <div class="feature-card">
+        <i class="fa-solid fa-location-dot"></i>
+        <h3>Live Tracking</h3>
+        <p>Track your auto in real-time with GPS navigation.</p>
+      </div>
+
+      <div class="feature-card">
+        <i class="fa-solid fa-wallet"></i>
+        <h3>Affordable Pricing</h3>
+        <p>No hidden charges. Transparent pricing always.</p>
+      </div>
+
+      <div class="feature-card">
+        <i class="fa-solid fa-headset"></i>
+        <h3>24/7 Support</h3>
+        <p>Get customer support anytime for help and queries.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing -->
+  <section class="pricing" id="pricing">
+    <h2>Our Pricing</h2>
+    <p>Choose the ride that fits your comfort and budget.</p>
+
+    <div class="pricing-grid">
+      <div class="price-card">
+        <h3>Standard Auto</h3>
+        <p class="price">₹25 <span>/ base fare</span></p>
+        <p>₹8 per km</p>
+        <button class="btn-primary">Book Standard</button>
+      </div>
+
+      <div class="price-card popular">
+        <h3>Shared Auto</h3>
+        <p class="price">₹15 <span>/ base fare</span></p>
+        <p>₹5 per km</p>
+        <button class="btn-primary">Book Shared</button>
+        <span class="badge">Most Popular</span>
+      </div>
+
+      <div class="price-card">
+        <h3>Premium Auto</h3>
+        <p class="price">₹45 <span>/ base fare</span></p>
+        <p>₹12 per km</p>
+        <button class="btn-primary">Book Premium</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="testimonials">
+    <h2>What Our Riders Say</h2>
+    <p>Real feedback from our happy customers.</p>
+
+    <div class="testimonial-grid">
+      <div class="testimonial-card">
+        <p>"Run A Ride is super affordable and faster than other apps!"</p>
+        <h4>- Rahul, Ambala ⭐⭐⭐⭐⭐</h4>
+      </div>
+
+      <div class="testimonial-card">
+        <p>"The drivers are polite and the pricing is transparent."</p>
+        <h4>- Priya, Chandigarh ⭐⭐⭐⭐⭐</h4>
+      </div>
+
+      <div class="testimonial-card">
+        <p>"I love the shared auto option, it saves a lot of money."</p>
+        <h4>- Aman, Delhi ⭐⭐⭐⭐</h4>
+      </div>
+    </div>
+  </section>
+
+  <!-- App Download -->
+  <section class="app-download">
+    <h2>Download the Run A Ride App</h2>
+    <p>Book rides instantly from your mobile anytime, anywhere.</p>
+
+    <div class="app-buttons">
+      <button class="btn-primary"><i class="fa-brands fa-google-play"></i> Google Play</button>
+      <button class="btn-outline"><i class="fa-brands fa-apple"></i> App Store</button>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section class="contact" id="contact">
+    <h2>Contact Us</h2>
+    <p>We value your feedback. Reach out anytime.</p>
+
+    <div class="contact-box">
+      <p><i class="fa-solid fa-envelope"></i> nikhilyadavbrj@gmail.com</p>
+      <p><i class="fa-solid fa-phone"></i> +91 9350748849</p>
+      <p><i class="fa-solid fa-location-dot"></i> Ambala, India</p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <h2>Run<span>A</span>Ride</h2>
+    <p>© 2026 Run A Ride. All Rights Reserved.</p>
+    <div class="social-icons">
+      <i class="fa-brands fa-facebook"></i>
+      <i class="fa-brands fa-instagram"></i>
+      <i class="fa-brands fa-twitter"></i>
+      <i class="fa-brands fa-linkedin"></i>
+    </div>
+  </footer>
+
+</body>
+</html>

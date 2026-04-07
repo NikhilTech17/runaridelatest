@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book a Ride - Run A Ride</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="auth.css">
+  <link rel="stylesheet" href="payment.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+  <!-- Back to Home Button -->
+  <div class="back-home">
+    <a href="index.html" class="back-btn">
+      <i class="fas fa-arrow-left"></i> Back to Home
+    </a>
+  </div>
+
+  <div class="booking-container">
+    <div class="booking-card">
+      <div class="booking-header">
+        <h1><i class="fas fa-map-marked-alt"></i> Book Your Ride</h1>
+        <p>Enter your journey details to get started</p>
+      </div>
+
+      <form id="bookingForm" class="booking-form">
+        <!-- Pickup Location -->
+        <div class="form-group">
+          <label for="pickup"><i class="fas fa-circle-dot"></i> Pickup Location</label>
+          <div class="input-wrapper">
+            <i class="fas fa-location-dot"></i>
+            <input type="text" id="pickup" name="pickup" placeholder="Enter pickup location" required autocomplete="off">
+          </div>
+        </div>
+
+        <!-- Drop Location -->
+        <div class="form-group">
+          <label for="drop"><i class="fas fa-square-full"></i> Drop Location</label>
+          <div class="input-wrapper">
+            <i class="fas fa-location-dot"></i>
+            <input type="text" id="drop" name="drop" placeholder="Enter drop location" required autocomplete="off">
+          </div>
+        </div>
+
+        <!-- Distance & Duration Display -->
+        <div class="trip-info" id="tripInfo" style="display: none;">
+          <div class="info-box">
+            <i class="fas fa-road"></i>
+            <div>
+              <span class="info-label">Distance</span>
+              <span class="info-value" id="distanceValue">0 km</span>
+            </div>
+          </div>
+          <div class="info-box">
+            <i class="fas fa-clock"></i>
+            <div>
+              <span class="info-label">Duration</span>
+              <span class="info-value" id="durationValue">0 mins</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Ride Type Selection -->
+        <div class="ride-type-section">
+          <label>Select Ride Type</label>
+          <div class="ride-options">
+            <div class="ride-option" data-type="auto" data-base-fare="25" data-per-km="8">
+              <div class="ride-icon">
+                <i class="fas fa-motorcycle"></i>
+              </div>
+              <div class="ride-details">
+                <h4>Auto Rickshaw</h4>
+                <p>₹25 base • ₹8/km</p>
+              </div>
+              <div class="ride-radio">
+                <input type="radio" name="rideType" id="auto" value="auto" checked>
+                <label for="auto"></label>
+              </div>
+            </div>
+
+            <div class="ride-option" data-type="car" data-base-fare="50" data-per-km="15">
+              <div class="ride-icon">
+                <i class="fas fa-car"></i>
+              </div>
+              <div class="ride-details">
+                <h4>Car</h4>
+                <p>₹50 base • ₹15/km</p>
+              </div>
+              <div class="ride-radio">
+                <input type="radio" name="rideType" id="car" value="car">
+                <label for="car"></label>
+              </div>
+            </div>
+
+            <div class="ride-option" data-type="cab" data-base-fare="100" data-per-km="25">
+              <div class="ride-icon">
+                <i class="fas fa-taxi"></i>
+              </div>
+              <div class="ride-details">
+                <h4>Premium Cab</h4>
+                <p>₹100 base • ₹25/km</p>
+              </div>
+              <div class="ride-radio">
+                <input type="radio" name="rideType" id="cab" value="cab">
+                <label for="cab"></label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Estimated Fare Display -->
+        <div class="fare-estimate" id="fareEstimate" style="display: none;">
+          <div class="fare-row">
+            <span>Base Fare:</span>
+            <span id="baseFareDisplay">₹0</span>
+          </div>
+          <div class="fare-row">
+            <span>Distance Fare:</span>
+            <span id="distanceFareDisplay">₹0</span>
+          </div>
+          <div class="fare-row">
+            <span>Taxes (5%):</span>
+            <span id="taxesDisplay">₹0</span>
+          </div>
+          <div class="fare-row total">
+            <span>Total Estimate:</span>
+            <span id="totalFareDisplay">₹0</span>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="booking-actions">
+          <button type="button" class="btn-outline full-width" onclick="calculateFare()">
+            <i class="fas fa-calculator"></i> Calculate Fare
+          </button>
+          <button type="submit" class="btn-primary full-width" id="proceedBtn" disabled>
+            <i class="fas fa-arrow-right"></i> Proceed to Book
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+  <script src="booking.js"></script>
+</body>
+</html>

@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up - Run A Ride</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="auth.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+  <div class="auth-container">
+    <!-- Back to Home Button -->
+    <div class="back-home">
+      <a href="index.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i> Back to Home
+      </a>
+    </div>
+
+    <!-- Sign Up Card -->
+    <div class="auth-card">
+      <div class="auth-header">
+        <h1>Create Account</h1>
+        <p>Join Run A Ride and start booking rides</p>
+      </div>
+
+      <form id="signupForm" class="auth-form">
+        <div class="form-group">
+          <label for="fullname">Full Name</label>
+          <div class="input-wrapper">
+            <i class="fas fa-user"></i>
+            <input type="text" id="fullname" name="fullname" placeholder="Enter your full name" required>
+          </div>
+          <span class="error-message" id="name-error"></span>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <div class="input-wrapper">
+            <i class="fas fa-envelope"></i>
+            <input type="email" id="email" name="email" placeholder="Enter your email" required>
+          </div>
+          <span class="error-message" id="email-error"></span>
+        </div>
+
+        <div class="form-group">
+          <label for="phone">Phone Number</label>
+          <div class="input-wrapper">
+            <i class="fas fa-phone"></i>
+            <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" required>
+          </div>
+          <span class="error-message" id="phone-error"></span>
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <div class="input-wrapper">
+            <i class="fas fa-lock"></i>
+            <input type="password" id="password" name="password" placeholder="Create a password" required>
+            <i class="fas fa-eye toggle-password" id="togglePassword"></i>
+          </div>
+          <span class="error-message" id="password-error"></span>
+        </div>
+
+        <div class="form-group">
+          <label for="confirmPassword">Confirm Password</label>
+          <div class="input-wrapper">
+            <i class="fas fa-lock"></i>
+            <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm your password" required>
+            <i class="fas fa-eye toggle-password" id="toggleConfirmPassword"></i>
+          </div>
+          <span class="error-message" id="confirm-password-error"></span>
+        </div>
+
+        <div class="form-terms">
+          <input type="checkbox" id="terms" name="terms" required>
+          <label for="terms">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></label>
+        </div>
+        <span class="error-message" id="terms-error"></span>
+
+        <button type="submit" class="btn-primary full-width">Create Account</button>
+      </form>
+
+      <div class="auth-footer">
+        <p>Already have an account? <a href="signin.html">Sign In</a></p>
+        <p style="margin-top: 10px;"><a href="quick-login.html"><i class="fas fa-bolt"></i> Quick Demo Login</a></p>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+    // Sign Up specific JavaScript with Backend Integration
+    document.addEventListener('DOMContentLoaded', function() {
+      const signupForm = document.getElementById('signupForm');
+      const submitBtn = signupForm.querySelector('button[type="submit"]');
+      const originalBtnText = submitBtn.innerHTML;
+      
+      // Password toggle functionality
+      const togglePassword = document.getElementById('togglePassword');
+      const toggleConfirmPassword = document.getElementById('toggleConfirmPassword');
+      
+      togglePassword.addEventListener('click', function() {
+        const passwordField = document.getElementById('password');
+        const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordField.setAttribute('type', type);
+        this.classList.toggle('fa-eye');
+        this.classList.toggle('fa-eye-slash');
+      });
+      
+      toggleConfirmPassword.addEventListener('click', function() {
+        const confirmPasswordField = document.getElementById('confirmPassword');
+        const type = confirmPasswordField.getAttribute('type') === 'password' ? 'text' : 'password';
+        confirmPasswordField.setAttribute('type', type);
+        this.classList.toggle('fa-eye');
+        this.classList.toggle('fa-eye-slash');
+      });
+      
+      signupForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        // Clear previous errors
+        clearErrors();
+        
+        // Get form values
+        const fullname = document.getElementById('fullname').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const phone = document.getElementById('phone').value.trim();
+        const password = document.getElementById('password').value;
+        const confirmPassword = document.getElementById('confirmPassword').value;
+        const terms = document.getElementById('terms').checked;
+        
+        // Validate form
+        let isValid = true;
+        
+        if (!validateName(fullname)) {
+          showErrorMessage('name-error', 'Please enter your full name (at least 2 characters)');
+          isValid = false;
+        }
+        
+        if (!validateEmail(email)) {
+          showErrorMessage('email-error', 'Please enter a valid email address');
+          isValid = false;
+        }
+        
+        if (!validatePhone(phone)) {
+          showErrorMessage('phone-error', 'Please enter a valid 10-digit phone number');
+          isValid = false;
+        }
+        
+        if (!validatePassword(password)) {
+          showErrorMessage('password-error', 'Password must be at least 6 characters');
+          isValid = false;
+        }
+        
+        if (password !== confirmPassword) {
+          showErrorMessage('confirm-password-error', 'Passwords do not match');
+          isValid = false;
+        }
+        
+        if (!terms) {
+          showErrorMessage('terms-error', 'Please agree to the terms and conditions');
+          isValid = false;
+        }
+        
+        if (!isValid) return;
+        
+        // Show loading state
+        setLoadingState(true);
+        
+        try {
+          // Make API request to backend
+          const response = await fetch('/api/users/register', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ 
+              fullName: fullname, 
+              email, 
+              phone, 
+              password 
+            })
+          });
+          
+          const data = await response.json();
+          
+          if (response.ok) {
+            // Store token and user data
+            localStorage.setItem('token', data.token);
+            localStorage.setItem('userId', data._id);
+            localStorage.setItem('userName', data.fullName);
+            
+            // Show success message
+            showSuccessMessage('✅ Account created successfully! Redirecting to dashboard...');
+            
+            // Redirect to dashboard after short delay
+            setTimeout(() => {
+              window.location.href = 'dashboard.html';
+            }, 1500);
+          } else {
+            // Show error from server
+            showErrorMessage('email-error', data.message || 'Registration failed. Please try again.');
+          }
+        } catch (error) {
+          console.error('Registration error:', error);
+          showErrorMessage('terms-error', 'Network error. Please check your connection and try again.');
+        } finally {
+          // Remove loading state
+          setLoadingState(false);
+        }
+      });
+      
+      // Set loading state
+      function setLoadingState(isLoading) {
+        if (isLoading) {
+          submitBtn.disabled = true;
+          submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating Account...';
+          submitBtn.style.opacity = '0.7';
+        } else {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalBtnText;
+          submitBtn.style.opacity = '1';
+        }
+      }
+      
+      // Real-time validation
+      document.getElementById('fullname').addEventListener('blur', function() {
+        const name = this.value.trim();
+        if (name && !validateName(name)) {
+          showErrorMessage('name-error', 'Please enter your full name (at least 2 characters)');
+        } else {
+          clearError('name-error');
+        }
+      });
+      
+      document.getElementById('email').addEventListener('blur', function() {
+        const email = this.value.trim();
+        if (email && !validateEmail(email)) {
+          showErrorMessage('email-error', 'Please enter a valid email address');
+        } else {
+          clearError('email-error');
+        }
+      });
+      
+      document.getElementById('phone').addEventListener('blur', function() {
+        const phone = this.value.trim();
+        if (phone && !validatePhone(phone)) {
+          showErrorMessage('phone-error', 'Please enter a valid 10-digit phone number');
+        } else {
+          clearError('phone-error');
+        }
+      });
+      
+      document.getElementById('password').addEventListener('blur', function() {
+        const password = this.value;
+        if (password && !validatePassword(password)) {
+          showErrorMessage('password-error', 'Password must be at least 6 characters');
+        } else {
+          clearError('password-error');
+        }
+      });
+      
+      document.getElementById('confirmPassword').addEventListener('blur', function() {
+        const password = document.getElementById('password').value;
+        const confirmPassword = this.value;
+        if (confirmPassword && password !== confirmPassword) {
+          showErrorMessage('confirm-password-error', 'Passwords do not match');
+        } else {
+          clearError('confirm-password-error');
+        }
+      });
+    });
+  </script>
+</body>
+</html>

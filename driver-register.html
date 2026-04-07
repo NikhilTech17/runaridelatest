@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Driver Registration - Run A Ride</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="auth.css">
+  <link rel="stylesheet" href="payment.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+  <!-- Back to Home Button -->
+  <div class="back-home">
+    <a href="index.html" class="back-btn">
+      <i class="fas fa-arrow-left"></i> Back to Home
+    </a>
+  </div>
+
+  <div class="booking-container">
+    <div class="auth-card" style="max-width: 700px;">
+      <div class="auth-header">
+        <h1><i class="fas fa-car-side"></i> Become a Driver</h1>
+        <p>Register as a driver and start earning with Run A Ride</p>
+      </div>
+
+      <form id="driverRegistrationForm" class="auth-form">
+        <!-- User ID (Hidden - will be retrieved from logged-in user) -->
+        <input type="hidden" id="userId" name="userId">
+
+        <!-- Vehicle Type Selection -->
+        <div class="form-group">
+          <label>Select Vehicle Type *</label>
+          <div class="ride-options" style="margin-top: 10px;">
+            <div class="ride-option selected" data-type="auto">
+              <div class="ride-icon">
+                <i class="fas fa-motorcycle"></i>
+              </div>
+              <div class="ride-details">
+                <h4>Auto Rickshaw</h4>
+                <p>Best for short trips</p>
+              </div>
+              <div class="ride-radio">
+                <input type="radio" name="vehicleType" id="auto" value="auto" checked>
+                <label for="auto"></label>
+              </div>
+            </div>
+
+            <div class="ride-option" data-type="car">
+              <div class="ride-icon">
+                <i class="fas fa-car"></i>
+              </div>
+              <div class="ride-details">
+                <h4>Car</h4>
+                <p>Comfortable rides</p>
+              </div>
+              <div class="ride-radio">
+                <input type="radio" name="vehicleType" id="car" value="car">
+                <label for="car"></label>
+              </div>
+            </div>
+
+            <div class="ride-option" data-type="cab">
+              <div class="ride-icon">
+                <i class="fas fa-taxi"></i>
+              </div>
+              <div class="ride-details">
+                <h4>Premium Cab</h4>
+                <p>Luxury experience</p>
+              </div>
+              <div class="ride-radio">
+                <input type="radio" name="vehicleType" id="cab" value="cab">
+                <label for="cab"></label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Vehicle Details -->
+        <div class="form-group">
+          <label for="vehicleNumber">Vehicle Number (Registration Plate) *</label>
+          <div class="input-wrapper">
+            <i class="fas fa-id-badge"></i>
+            <input type="text" id="vehicleNumber" name="vehicleNumber" placeholder="e.g., DL 3C AB 1234" required uppercase>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="vehicleModel">Vehicle Model *</label>
+          <div class="input-wrapper">
+            <i class="fas fa-car"></i>
+            <input type="text" id="vehicleModel" name="vehicleModel" placeholder="e.g., Bajaj RE, Maruti Suzuki Dzire" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="vehicleColor">Vehicle Color *</label>
+          <div class="input-wrapper">
+            <i class="fas fa-palette"></i>
+            <input type="text" id="vehicleColor" name="vehicleColor" placeholder="e.g., Yellow, White, Black" required>
+          </div>
+        </div>
+
+        <!-- License Details -->
+        <div class="form-group">
+          <label for="licenseNumber">Driving License Number *</label>
+          <div class="input-wrapper">
+            <i class="fas fa-id-card"></i>
+            <input type="text" id="licenseNumber" name="licenseNumber" placeholder="Enter your license number" required uppercase>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="licenseExpiry">License Expiry Date *</label>
+          <div class="input-wrapper">
+            <i class="fas fa-calendar-alt"></i>
+            <input type="date" id="licenseExpiry" name="licenseExpiry" required min="2026-01-01">
+          </div>
+        </div>
+
+        <!-- Service Areas -->
+        <div class="form-group">
+          <label for="serviceAreas">Service Areas (Optional)</label>
+          <div class="input-wrapper">
+            <i class="fas fa-map-marker-alt"></i>
+            <input type="text" id="serviceAreas" name="serviceAreas" placeholder="e.g., Connaught Place, Karol Bagh (comma separated)">
+          </div>
+          <small style="color: #aaaaaa; font-size: 12px; margin-top: 5px; display: block;">Areas where you want to accept rides</small>
+        </div>
+
+        <!-- Terms and Conditions -->
+        <div class="form-terms">
+          <input type="checkbox" id="terms" name="terms" required>
+          <label for="terms">I agree to the <a href="#">Terms of Service</a> and understand that my details will be verified before approval</label>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn-primary full-width">
+          <i class="fas fa-user-plus"></i> Register as Driver
+        </button>
+
+        <!-- Info Message -->
+        <div style="background: rgba(255, 183, 3, 0.1); border: 1px solid rgba(255, 183, 3, 0.3); border-radius: 8px; padding: 15px; margin-top: 20px; text-align: center;">
+          <i class="fas fa-info-circle" style="color: #ffb703;"></i>
+          <span style="color: #ffffff; font-size: 14px; margin-left: 8px;">
+            Your registration will be reviewed and verified by our admin team within 24-48 hours
+          </span>
+        </div>
+      </form>
+
+      <div class="auth-footer">
+        <p>Already a driver? <a href="driver-dashboard.html">Go to Dashboard</a></p>
+        <p>Want to ride instead? <a href="book-ride-map.html">Book a Ride</a></p>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+  <script src="driver.js"></script>
+</body>
+</html>
